@@ -4,47 +4,34 @@ var app = new Vue({
 
   // 用いるデータ
   data: {
-    selectedNumbers: [],
-    unselectedNumbers: []
-  },
-
-  // 算出プロパティ
-  // （関数によって算出されたデータ）
-  computed: {
-    drawnNumber: function() {
-      var num = "";
-      if (this.selectedNumbers.length != 0) {
-        num = this.selectedNumbers[this.selectedNumbers.length - 1];
-      }
-      return num;
-    }
+    // numbers: 未使用・使用済みの数列を管理
+    numbers: {
+      unused: [],
+      used: []
+    },
+    // chosenNum: 最後に抽選された数
+    chosenNum: "",
+    // clickCount: 「Click」ボタンが押された数
+    clickCount: 0
   },
 
   // ライフサイクルハック
   // mounted: DOM構築直後
-  mounted: function() {
-    // 配列をシャッフル（破壊的変更）
-    function shuffleArray(array) {
-      for (var i = array.length - 1; i > 0; i--) {
-        var r = Math.floor(Math.random() * (i + 1));
-        var tmp = array[i];
-        array[i] = array[r];
-        array[r] = tmp;
-      }
-      return array;
-    }
-    for (var i = 1; i <= 75; i++) {
-      this.unselectedNumbers.push(i);
-    }
-    shuffleArray(this.unselectedNumbers);
+  mounted: function () {
+    // シャッフル済みの1〜75の整数列を number.unused に
+    // _ は lodash という便利ライブラリのインスタンス(jQuery の $ のようなもの)
+    this.numbers.unused = _.shuffle(_.range(start = 1, end = 75 + 1))
   },
 
   // このアプリケーションで使うメソッド
   methods: {
-    draw: function() {
-      if (this.unselectedNumbers.length != 0) {
-        this.selectedNumbers.push(this.unselectedNumbers.pop());
-      }
+    chooseNum: function () {
+      // 未使用数列の先頭の数を chosenNum に
+      this.chosenNum = this.numbers.unused.shift()
+      // chosenNum を 使用済み数列の末尾に
+      this.numbers.used.push(this.chosenNum)
+      // clickCount をインクリメント
+      this.clickCount++;
     }
   }
 });

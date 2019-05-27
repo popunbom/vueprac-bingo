@@ -1,26 +1,31 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta charset="utf-8" />
-    <title>Bingo</title>
-    <link href="main.css" rel="stylesheet" />
-  </head>
 
-  <body>
-    <div id="app">
-      <h1>Bingo Machine</h1>
-      <p id="count">{{ 75 - unselectedNumbers.length }} Times</p>
-      <button v-on:click="draw">Click</button>
-      <transition name="num">
-        <div v-bind:key="drawnNumber" class="bigNumber">
-          {{ drawnNumber }}
-        </div>
-      </transition>
-      <transition-group tag="ul">
-        <li v-bind:key="item" v-for="item in selectedNumbers">{{ item }}</li>
-      </transition-group>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
-    <script src="main.js"></script>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <title>Bingo</title>
+  <link href="main.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="app">
+    <h1>Bingo Machine</h1>
+    <p id="count">{{ clickCount }} Times</p>
+    <button v-on:click="chooseNum">Click</button>
+    <transition name="num">
+      <div v-bind:key="chosenNum" class="bigNumber">
+        {{ chosenNum }}
+      </div>
+    </transition>
+    <transition-group tag="ul">
+      <li v-bind:key="number" v-for="number in numbers.used">{{ number }}</li>
+    </transition-group>
+  </div>
+  <!-- Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+  <!-- lodash -->
+  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.11/lodash.min.js"></script>
+  <script src="main.js"></script>
+</body>
+
 </html>
