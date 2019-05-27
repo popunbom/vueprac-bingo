@@ -15,6 +15,12 @@ var app = new Vue({
     clickCount: 0
   },
 
+  computed: {
+    isEnd: function () {
+      return this.numbers.unused.length == 0
+    }
+  },
+
   // ライフサイクルハック
   // mounted: DOM構築直後
   mounted: function () {
@@ -28,8 +34,8 @@ var app = new Vue({
     chooseNum: function () {
       // 未使用数列の先頭の数を chosenNum に
       this.chosenNum = this.numbers.unused.shift()
-      // chosenNum を 使用済み数列の末尾に
-      this.numbers.used.push(this.chosenNum)
+      // chosenNum を 使用済み数列の先頭に
+      this.numbers.used.unshift(this.chosenNum)
       // clickCount をインクリメント
       this.clickCount++;
     }
