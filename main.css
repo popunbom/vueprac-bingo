@@ -76,7 +76,7 @@ li {
   background-color: #222222;
 }
 
-li:last-child {
+li:first-child {
   background: #666666;
   font-weight: bolder;
 }
